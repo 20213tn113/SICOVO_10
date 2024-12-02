@@ -20,16 +20,38 @@ class ModeloCompra():
     def listar_compras_usuario(self, db, usuario):
         try:
             cursor = db.connection.cursor()
-            sql = """SELECT COM.fecha, LIB.isbn, LIB.titulo, LIB.precio
+            sql = """SELECT COM.fecha, LIB.isbn, LIB.titulo, LIB.precio, LIB.imagen_portada
                         FROM compra COM JOIN libro LIB ON COM.libro_isbn = LIB.isbn
                         WHERE COM.usuario_id = {0}""".format(usuario.id)
             cursor.execute(sql)
             data = cursor.fetchall()
             compras = []
             for row in data:
-                lib = Libro(row[1], row[2], None, None, row[3],None, None ,None )
+                lib = Libro(row[1], row[2], None, None, row[3],None, row[4] ,None )
                 com = Compra(None, lib, usuario, row[0])
                 compras.append(com)
             return compras   
+        except Exception as ex:
+            raise Exception(ex)
+
+    @classmethod
+    def borrarcompra(self, db, isbn):
+        try:
+            cursor = db.connection.cursor()
+            sql = """DELETE FROM compra WHERE libro_isbn = %s"""
+            cursor.execute(sql, (isbn,))
+            db.connection.commit()
+            return True
+        except Exception as ex:
+            raise Exception(ex)
+
+    @classmethod
+    def editcompra(self, db, isbn,isbn_org):
+        try:
+            cursor = db.connection.cursor()
+            sql = """UPDATE compra SET libro_isbn = %s WHERE libro_isbn = %s"""
+            cursor.execute(sql, (isbn, isbn_org,))
+            db.connection.commit()
+            return True
         except Exception as ex:
             raise Exception(ex)

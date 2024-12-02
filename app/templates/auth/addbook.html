@@ -20,8 +20,37 @@
         <input type="text" class="form-control" id="titulo" name="titulo" required>
     </div>
     <div class="mb-3">
-        <label for="autor" class="form-label">Autor</label>
-        <input type="text" class="form-control" id="autor" name="autor" required>
+
+
+
+        <label>
+            <input type="radio" name="autor_opcion" value="existente" id="radio_existente" checked>
+            Usar autor existente
+        </label>
+        <br>
+        <select id="autor_existente" name="autor_existente">
+            <option value="">Seleccione un autor...</option>
+            <!-- Se cargarán dinámicamente los autores -->
+        </select>
+        <br>
+
+        <label>
+            <input type="radio" name="autor_opcion" value="nuevo" id="radio_nuevo">
+            Agregar nuevo autor
+        </label>
+        <br>
+        <input type="text" id="nombre_autor" name="nombre_autor" placeholder="Nombre" disabled>
+        <input type="text" id="apellido_autor" name="apellido_autor" placeholder="Apellido" disabled>
+        <label for="fecha_nacimiento">Fecha de Nacimiento:</label>
+        <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" disabled>
+
+
+
+
+
+{#    #}
+{#        <label for="autor" class="form-label">Autor</label>#}
+{#        <input type="text" class="form-control" id="autor" name="autor"  required>#}
     </div>
      <div class="mb-3">
         <label for="fecha_edi" class="form-label">Año de edicion</label>
@@ -45,7 +74,6 @@
 
 {%block customJS%}
 <script src="{{ url_for('static', filename='js/books.js') }}"></script>
-<script src="{{ url_for('static', filename='js/notificacionSwal.js') }}"> </script>
 <script src="{{ url_for('static', filename='lib/sweetalert2-9.10.0/sweetalert2.all.min.js') }}"> </script>
 
 

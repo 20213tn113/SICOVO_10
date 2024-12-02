@@ -16,7 +16,10 @@
     {% for l in data.libros %}
     <div class="col-sm-12 col-md-6 col-l-4 col-xl-4">
         <div class="card mb-4 shadow-sm">
-            {% set url = 'img/portadas/' + l.isbn + '.jpg' %}
+
+            {% set url = 'img/portadas/' + l.imagen_portada %}
+
+
             <img class="card-img-top" src="{{ url_for('static', filename=url)}}" height="320" alt="{{ l.titulo }}" />
             <div class="card-body"> 
                 <h5 class="card-title"> {{ l.titulo }} <span style="float: right;">$ {{ l.precio }}</span></h5>

@@ -2,6 +2,7 @@
 
 {% block container %}
 <h1>Libros Disponibles</h1>
+    <input type="hidden" name="csrf-token" value="{{ csrf_token() }}" >
 
     <a href="{{ url_for('redicaddbook') }}" class="btn btn-success">Agregar Nuevo Libro</a>
 
@@ -50,11 +51,11 @@
             </td>
             <td>
                 <!-- Botón para editar el libro -->
-                <a href="{{ url_for('login', id=libro.id) }}" class="btn btn-warning">Editar</a>
+
+                    <a type="button" class="btn btn-warning btnEditar" data-isbn="{{ libro.isbn }}">Editar</a>
                 <!-- Formulario para eliminar el libro con confirmación -->
-                <form action="{{ url_for('login', id=libro.id) }}" method="POST" style="display:inline;">
-                    <button type="submit" class="btn btn-danger" onclick="return confirm('¿Estás seguro de que deseas eliminar este libro?')">Eliminar</button>
-                </form>
+
+                    <button type="button" class="btn btn-danger btnEliminar " id="btnEliminar" data-isbn="{{ libro.isbn }}">Eliminar</button>
             </td>
         </tr>
         {% endfor %}
@@ -63,4 +64,12 @@
 
 <!-- Botón para agregar un nuevo libro -->
 
+{%block customJS%}
+<script src="{{ url_for('static', filename='js/biblioteca.js') }}"></script>
+<script src="{{ url_for('static', filename='lib/sweetalert2-9.10.0/sweetalert2.all.min.js') }}"> </script>
+
+
+{%endblock%}
+
 {% endblock %}
+

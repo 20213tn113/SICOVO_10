@@ -1,0 +1,80 @@
+{% extends './body.html' %}
+
+{% block title %}Editar Libro{% endblock %}
+
+{% block container %}
+<h1>Editar Libro</h1>
+
+    <input type="hidden" name="csrf-token" value="{{ csrf_token() }}">
+    <input type="hidden" id="csrf-token" name="csrf-token" value="{{ csrf_token() }}">
+
+    <div class="mb-3">
+        <label for="isbn" class="form-label">ISBN</label>
+        <input type="hidden" id="isbn_org" name="isbn_org" value="{{ libro[0] }}">
+
+        <input type="text" class="form-control" id="isbn" name="isbn" value="{{ libro[0] }}" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="titulo" class="form-label">Título</label>
+        <input type="text" class="form-control" id="titulo" name="titulo" value="{{ libro[1] }}" required>
+    </div>
+
+    <div class="mb-3">
+        <label>
+            <input type="radio" name="autor_opcion" value="existente" id="radio_existente" {% if libro[2] %} checked {% endif %}>
+            Usar autor existente
+        </label>
+        <br>
+        <input type="hidden" id="autor_id" name="autor_id" value="{{ libro[2] }}">
+        <select id="autor_existente" name="autor_existente" >
+
+            <!-- Aquí cargarás los autores existentes desde la base de datos -->
+        </select>
+        <br>
+
+        <label>
+            <input type="radio" name="autor_opcion" value="nuevo" id="radio_nuevo">
+            Agregar nuevo autor
+        </label>
+        <br>
+        <input type="text" id="nombre_autor" name="nombre_autor" placeholder="Nombre"  disabled>
+        <input type="text" id="apellido_autor" name="apellido_autor" placeholder="Apellido"  disabled>
+        <label for="fecha_nacimiento">Fecha de Nacimiento:</label>
+        <input type="date" id="fecha_nacimiento" name="fecha_nacimiento"  disabled>
+    </div>
+
+    <div class="mb-3">
+        <label for="fecha_edi" class="form-label">Año de edición</label>
+        <input type="text" class="form-control" id="fecha_edi" name="fecha_edi" value="{{ libro[3] }}" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="descripcion" class="form-label">Descripción</label>
+        <textarea class="form-control" id="descripcion" name="descripcion">{{ libro[5] }}</textarea>
+    </div>
+
+    <div class="mb-3">
+        <label for="precio" class="form-label">Precio</label>
+        <input type="number" class="form-control" id="precio" name="precio" value="{{ libro[4] }}" step="0.01" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="imagen" class="form-label">Portada (Imagen)</label>
+        <input type="file" class="form-control" id="imagen" name="imagen">
+        {% if libro[6] %}
+                    <img src="{{ url_for('static', filename='/img/portadas/' + libro[6]) }}" alt="Portada" width="100">
+                {% else %}
+                    No disponible
+                {% endif %}
+        <small>Deja este campo vacío si no deseas cambiar la imagen.</small>
+    </div>
+
+    <button type="submit" class="btn btn-primary editbtn">Guardar Cambios</button>
+
+{% block customJS %}
+<script src="{{ url_for('static', filename='js/edit.js') }}"></script>
+<script src="{{ url_for('static', filename='lib/sweetalert2-9.10.0/sweetalert2.all.min.js') }}"></script>
+{% endblock %}
+
+{% endblock %}
